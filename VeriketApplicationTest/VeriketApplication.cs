@@ -38,14 +38,28 @@ namespace VeriketApplicationTest
             logTimer.Stop();
         }
 
-        private void WriteLog()
+        public void WriteLog()
         {
-            string logPath = @"C:\ProgramData\VeriketApp\VeriketAppTest.csv";
+            string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "VeriketApp\\VeriketAppTest.csv");
+            string directoryPath = Path.GetDirectoryName(logPath);
             string logEntry = $"{DateTime.Now}, {Environment.MachineName}, {Environment.UserName}";
-            if (!File.Exists(logPath))
-                File.Create(logPath);
 
-            using (StreamWriter writer = new StreamWriter(logPath, true))
+            // Klasörün var olup olmadığını kontrol et ve yoksa oluştur
+            if (!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+
+            // Dosyanın var olup olmadığını kontrol et ve yoksa oluştur
+            if (!File.Exists(logPath))
+            {
+                using (var fs = File.Create(logPath))
+                {
+                    // FileStream kullanıldıktan sonra kapatılır, böylece dosya kilidi kalkar
+                }
+            }
+
+            // Dosyaya yazarken, dosyanın başka bir uygulama tarafından da kullanılabilmesine izin ver
+            using (FileStream fs = new FileStream(logPath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            using (StreamWriter writer = new StreamWriter(fs))
             {
                 writer.WriteLine(logEntry);
             }
