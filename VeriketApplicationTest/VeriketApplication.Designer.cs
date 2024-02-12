@@ -1,6 +1,6 @@
 ﻿namespace VeriketApplicationTest
 {
-    partial class Service1
+    partial class VeriketApplication
     {
         /// <summary> 
         /// Required designer variable.

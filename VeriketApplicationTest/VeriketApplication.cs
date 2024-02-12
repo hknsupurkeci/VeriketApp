@@ -12,10 +12,10 @@ using System.Timers;
 
 namespace VeriketApplicationTest
 {
-    public partial class Service1 : ServiceBase
+    public partial class VeriketApplication : ServiceBase
     {
         private Timer logTimer;
-        public Service1()
+        public VeriketApplication()
         {
             InitializeComponent();
         }
