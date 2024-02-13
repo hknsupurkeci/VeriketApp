@@ -1,30 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
+using System.Security.Principal;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using System.Configuration; // For ConfigurationManager
 
 namespace VeriketApplicationTest
 {
     public partial class VeriketApplication : ServiceBase
     {
         private Timer logTimer;
+        private readonly ILogger logger;
+        private readonly int timerIntervalMilliseconds = Convert.ToInt32(ConfigurationManager.AppSettings["TimerIntervalMilliseconds"]);
+        private readonly string logDirectoryName = ConfigurationManager.AppSettings["LogDirectoryName"];
+        private readonly string logFileName = ConfigurationManager.AppSettings["LogFileName"];
+        private readonly string catchLogFileName = ConfigurationManager.AppSettings["CatchLogFileName"];
+        private readonly string logPath;
+        private readonly string catchLogPath;
+
         public VeriketApplication()
         {
             InitializeComponent();
+            // Setting up the full paths for the log file and the catch log file
+            logPath = GetLogPath(logFileName, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), logDirectoryName));
+            catchLogPath = GetLogPath(catchLogFileName, AppDomain.CurrentDomain.BaseDirectory);
+            logger = new FileLogger(logPath);
         }
 
         protected override void OnStart(string[] args)
         {
-            logTimer = new Timer();
-            logTimer.Interval = 5000; // 5 saniye
-            logTimer.Elapsed += new ElapsedEventHandler(OnTimerElapsed);
+            logTimer = new Timer(timerIntervalMilliseconds);
+            logTimer.Elapsed += OnTimerElapsed;
             logTimer.Start();
         }
 
@@ -40,29 +46,41 @@ namespace VeriketApplicationTest
 
         public void WriteLog()
         {
-            string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "VeriketApp\\VeriketAppTest.csv");
-            string directoryPath = Path.GetDirectoryName(logPath);
-            string logEntry = $"{DateTime.Now}, {Environment.MachineName}, {Environment.UserName}";
+            try
+            {
+                logger.Log($"{DateTime.Now}, {Environment.MachineName}, {WindowsIdentity.GetCurrent().Name}");
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"{DateTime.Now} - Error writing log: {ex.Message}\n";
+                File.AppendAllText(catchLogPath, errorMessage);
+            }
+        }
 
-            // Klasörün var olup olmadığını kontrol et ve yoksa oluştur
+        /// <summary>
+        /// Gets the full path for a specified file name within a specified directory path.
+        /// If the directory does not exist, it is created. If the file does not exist, it is created.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="directoryPath">The directory path where the file is located.</param>
+        /// <returns>The full path of the file.</returns>
+        private string GetLogPath(string fileName, string directoryPath)
+        {
+            // Create directory if it does not exist
             if (!Directory.Exists(directoryPath))
+            {
                 Directory.CreateDirectory(directoryPath);
-
-            // Dosyanın var olup olmadığını kontrol et ve yoksa oluştur
-            if (!File.Exists(logPath))
-            {
-                using (var fs = File.Create(logPath))
-                {
-                    // FileStream kullanıldıktan sonra kapatılır, böylece dosya kilidi kalkar
-                }
             }
 
-            // Dosyaya yazarken, dosyanın başka bir uygulama tarafından da kullanılabilmesine izin ver
-            using (FileStream fs = new FileStream(logPath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-            using (StreamWriter writer = new StreamWriter(fs))
+            string fullPath = Path.Combine(directoryPath, fileName);
+
+            // Create file if it does not exist
+            if (!File.Exists(fullPath))
             {
-                writer.WriteLine(logEntry);
+                using (var fs = File.Create(fullPath)) { }
             }
+
+            return fullPath;
         }
     }
 }

@@ -3,6 +3,11 @@
     partial class ProjectInstaller
     {
         /// <summary>
+        /// The value is determined at the time of definition<br></br><br></br>
+        /// <b>Returns </b>the service name
+        /// </summary>
+        private const string _serviceName = "Veriket.Application.Test";
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -30,6 +35,7 @@
         {
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
             this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
+            this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // serviceProcessInstaller1
             // 
@@ -41,7 +47,7 @@
             // serviceInstaller1
             // 
             this.serviceInstaller1.Description = "Veriket.Application.Test.Service";
-            this.serviceInstaller1.ServiceName = "Veriket.Application.Test";
+            this.serviceInstaller1.ServiceName = _serviceName;
             // 
             // ProjectInstaller
             // 

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration.Install;
-using System.Linq;
+using System.ServiceProcess;
 using System.Threading.Tasks;
 
 namespace VeriketApplicationTest
@@ -14,6 +13,15 @@ namespace VeriketApplicationTest
         public ProjectInstaller()
         {
             InitializeComponent();
+            this.serviceInstaller1.AfterInstall += ServiceInstaller_AfterInstall;
+        }
+
+        private void ServiceInstaller_AfterInstall(object sender, InstallEventArgs e)
+        {
+            using (ServiceController sc = new ServiceController(_serviceName))
+            {
+                sc.Start();
+            }
         }
     }
 }

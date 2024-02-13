@@ -5,6 +5,10 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeriketApplicationTest", "VeriketApplicationTest\VeriketApplicationTest.csproj", "{3DE2073F-E108-4EF0-8596-DF270EE67D2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormApplication", "WinFormApplication\WinFormApplication.csproj", "{6FDAF48B-C583-4B82-BDA9-C952812AC5CD}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "VeriketAppSetup", "VeriketAppSetup\VeriketAppSetup.vdproj", "{70697CAB-2347-45A3-8428-296BE4B99FAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,12 @@ Global
 		{3DE2073F-E108-4EF0-8596-DF270EE67D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DE2073F-E108-4EF0-8596-DF270EE67D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DE2073F-E108-4EF0-8596-DF270EE67D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FDAF48B-C583-4B82-BDA9-C952812AC5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FDAF48B-C583-4B82-BDA9-C952812AC5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FDAF48B-C583-4B82-BDA9-C952812AC5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FDAF48B-C583-4B82-BDA9-C952812AC5CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70697CAB-2347-45A3-8428-296BE4B99FAC}.Debug|Any CPU.ActiveCfg = Debug
+		{70697CAB-2347-45A3-8428-296BE4B99FAC}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
