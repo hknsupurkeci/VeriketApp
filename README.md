@@ -40,9 +40,10 @@ The Setup Project is configured to install both `VeriketApplicationTest` and `Wi
 
 ### Installation Process
 
-1. Execute the provided `.msi` installer.
-2. Follow the on-screen instructions to install both applications.
-3. Upon completion, the service will start automatically, and the Windows Forms application will be available for use.
+1. Download the `VeriketAppSetup.msi` installer from the [Setup File](Setup%20File/VeriketAppSetup.msi) link in the main directory of this repository.
+2. Execute the downloaded `.msi` installer.
+3. Follow the on-screen instructions to install both applications.
+4. Upon completion, the service will start automatically, and the Windows Forms application will be available for use.
 
 ### Uninstallation Process
 
