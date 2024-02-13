@@ -32,7 +32,7 @@ The `WinFormApplication` is a GUI-based application that reads and displays log 
 
 ### Usage
 
-Run the application, and use the "Load" button to fetch and display log data from the log file.
+Run the application, and use the "GetLogValues" button to fetch and display log data from the log file.
 
 ## Setup Project
 
