@@ -53,7 +53,7 @@ The Setup Project is configured to install both `VeriketApplicationTest` and `Wi
 
 ## Authors
 
-- **Your Name** - *Initial work* - [Hakan](https://github.com/hknsupurkeci)
+*Initial work* - [Hakan](https://github.com/hknsupurkeci)
 
 ## License
 
